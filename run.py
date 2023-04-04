@@ -12,10 +12,30 @@
 
 def username():
     """
-    Gets the user name
+    Gets the username
     """
     user = input('Enter your username: ')
-    print(f"Welcome to Battleships Admiral {user}!")
+    print(f'Welcome to Battleships Admiral {user}!')
+
+    return user
 
 
-username()
+BOARD_SIZE = 5
+board = []
+for x in range(BOARD_SIZE):
+    board.append(["O"] * BOARD_SIZE)
+
+
+def print_board(board):
+    """
+    Prints the board
+    """
+    print('----------')
+    for row in board:
+        print(" ".join(row))
+    print('----------')
+
+    return board
+
+
+print_board(board)
