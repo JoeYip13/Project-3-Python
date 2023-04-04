@@ -8,6 +8,7 @@
 # 4. Enter your X and Y co-ordinates.
 # 6. Game objectives is to sink the opponents ship.
 # 7. Winner is first to sink all opponents ships.
+from random import randint
 
 
 def get_username():
@@ -21,6 +22,7 @@ def get_username():
 
 
 BOARD_SIZE = 5
+NUM_OF_SHIPS = 5
 player_board = []
 computer_board = []
 username = get_username()
@@ -40,6 +42,25 @@ def print_board(board, player):
     print('----------')
 
     return board
+
+
+def create_ship(board):
+    """
+    Generate random ship locations and marks the board with 'S'
+    for ships
+    """
+    for i in range(NUM_OF_SHIPS):
+        ship_x = randint(0, len(board)-1)
+        ship_y = randint(0, len(board)-1)
+        while board[ship_x][ship_y] == 'S':
+            ship_x = randint(0, len(board)-1)
+            ship_y = randint(0, len(board)-1)
+        board[ship_x][ship_y] = 'S'
+    return (ship_x, ship_y)
+
+
+ship_x, ship_y = create_ship(player_board)
+ship_x, ship_y = create_ship(computer_board)
 
 
 print_board(player_board, username)
