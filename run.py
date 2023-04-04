@@ -10,26 +10,30 @@
 # 7. Winner is first to sink all opponents ships.
 
 
-def username():
+def get_username():
     """
     Gets the username
     """
-    user = input('Enter your username: ')
-    print(f'Welcome to Battleships Admiral {user}!')
+    username = input('Enter your username: ')
+    print(f'Welcome to Battleships Admiral {username}!')
 
-    return user
+    return username
 
 
 BOARD_SIZE = 5
-board = []
+player_board = []
+computer_board = []
+username = get_username()
 for x in range(BOARD_SIZE):
-    board.append(["O"] * BOARD_SIZE)
+    player_board.append(["O"] * BOARD_SIZE)
+    computer_board.append(['O'] * BOARD_SIZE)
 
 
-def print_board(board):
+def print_board(board, player):
     """
     Prints the board
     """
+    print(f"{player}'s Battle Fleet")
     print('----------')
     for row in board:
         print(" ".join(row))
@@ -38,4 +42,5 @@ def print_board(board):
     return board
 
 
-print_board(board)
+print_board(player_board, username)
+print_board(computer_board, "Enemy")
