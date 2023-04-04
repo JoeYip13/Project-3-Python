@@ -59,9 +59,19 @@ def create_ship(board):
     return (ship_x, ship_y)
 
 
+def get_coordinates():
+    """
+    Gets X and Y co-ordinate inputs
+    """
+    x = input('Enter X co-ordinate (1-5): ')
+    y = input('Enter Y co-ordinate (1-5): ')
+
+    return x, y
+
+
 ship_x, ship_y = create_ship(player_board)
 ship_x, ship_y = create_ship(computer_board)
-
-
 print_board(player_board, username)
 print_board(computer_board, "Enemy")
+
+get_coordinates()
