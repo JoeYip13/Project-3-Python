@@ -64,9 +64,15 @@ def get_coordinates():
     Gets X and Y co-ordinate inputs
     """
     x = input('Enter X co-ordinate (1-5): ')
+    while x not in '12345':
+        print('Please enter a valid number')
+        x = input('Enter X co-ordinate (1-5): ')
     y = input('Enter Y co-ordinate (1-5): ')
+    while y not in '12345':
+        print('Please enter a valid number')
+        y = input('Enter Y co-ordinate (1-5): ')
 
-    return x, y
+    return int(x)-1, int(y)-1
 
 
 ship_x, ship_y = create_ship(player_board)
