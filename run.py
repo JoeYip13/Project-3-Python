@@ -88,6 +88,7 @@ def valid_coordinates(x, y, board, ships):
     if (x, y) in ships:
         print(f'Direct HIT! Admiral {username} You sunk a enemy ship!')
         board[x][y] = '*'
+        count_hit_ship(computer_board)
         print_board(player_board, username)
         print_board(computer_board, "Enemy")
     else:
@@ -95,6 +96,19 @@ def valid_coordinates(x, y, board, ships):
         board[x][y] = 'X'
         print_board(player_board, username)
         print_board(computer_board, "Enemy")
+
+
+def count_hit_ship(board):
+    """
+    Counts how many ships are hit on the board and increments the count by 1
+    """
+    count = 0
+    for x in board:
+        for y in x:
+            if y == '*':
+                count += 1
+                print(f"Total ships sunk: {count}")
+    return count
 
 
 create_ship(player_board, player_ships)
