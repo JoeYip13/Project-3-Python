@@ -89,11 +89,13 @@ def valid_coordinates(x, y, board, ships):
         print(f'Direct HIT! Admiral {username} You sunk a enemy ship!')
         board[x][y] = '*'
         count_hit_ship(computer_board)
+        computer_choice(player_board)
         print_board(player_board, username)
         print_board(computer_board, "Enemy")
     else:
-        print(f'MISS. That  Admiral {username}')
+        print(f'MISS. No hit Admiral {username}')
         board[x][y] = 'X'
+        computer_choice(player_board)
         print_board(player_board, username)
         print_board(computer_board, "Enemy")
 
@@ -109,6 +111,15 @@ def count_hit_ship(board):
                 count += 1
                 print(f"Total ships sunk: {count}")
     return count
+
+
+def computer_choice(board):
+    """
+    Generate random computer choice and prints 'X' on the player board
+    """
+    row = randint(0, len(board)-1)
+    col = randint(0, len(board)-1)
+    board[row][col] = 'X'
 
 
 create_ship(player_board, player_ships)
