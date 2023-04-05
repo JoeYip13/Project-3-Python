@@ -80,9 +80,27 @@ def get_coordinates():
     return int(x)-1, int(y)-1
 
 
+def valid_coordinates(x, y, board, ships):
+    """
+    Validates co-ordinates from the get_coordinates function to see if
+    player has hit or miss
+    """
+    if (x, y) in ships:
+        print(f'Direct HIT! Admiral {username} You sunk a enemy ship!')
+        board[x][y] = '*'
+        print_board(player_board, username)
+        print_board(computer_board, "Enemy")
+    else:
+        print(f'MISS. That  Admiral {username}')
+        board[x][y] = 'X'
+        print_board(player_board, username)
+        print_board(computer_board, "Enemy")
+
+
 create_ship(player_board, player_ships)
 create_ship(computer_board, computer_ships)
 print_board(player_board, username)
 print_board(computer_board, "Enemy")
 
-get_coordinates()
+guess_x, guess_y = get_coordinates()
+valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
