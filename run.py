@@ -25,6 +25,8 @@ BOARD_SIZE = 5
 NUM_OF_SHIPS = 5
 player_board = []
 computer_board = []
+player_ships = []
+computer_ships = []
 username = get_username()
 for x in range(BOARD_SIZE):
     player_board.append(["O"] * BOARD_SIZE)
@@ -44,24 +46,27 @@ def print_board(board, player):
     return board
 
 
-def create_ship(board):
+def create_ship(board, ships):
     """
     Generate random ship locations and marks the board with 'S'
     for ships
     """
-    for i in range(NUM_OF_SHIPS):
+    for ship in range(NUM_OF_SHIPS):
         ship_x = randint(0, len(board)-1)
         ship_y = randint(0, len(board)-1)
         while board[ship_x][ship_y] == 'S':
             ship_x = randint(0, len(board)-1)
             ship_y = randint(0, len(board)-1)
         board[ship_x][ship_y] = 'S'
-    return (ship_x, ship_y)
+        ships.append((ship_x, ship_y))
+        print(ships)
+    return ships
 
 
 def get_coordinates():
     """
-    Gets X and Y co-ordinate inputs
+    Gets X and Y co-ordinate inputs and validates input to only
+    take the co-ordinates within the board size
     """
     x = input('Enter X co-ordinate (1-5): ')
     while x not in '12345':
@@ -75,8 +80,8 @@ def get_coordinates():
     return int(x)-1, int(y)-1
 
 
-ship_x, ship_y = create_ship(player_board)
-ship_x, ship_y = create_ship(computer_board)
+create_ship(player_board, player_ships)
+create_ship(computer_board, computer_ships)
 print_board(player_board, username)
 print_board(computer_board, "Enemy")
 
