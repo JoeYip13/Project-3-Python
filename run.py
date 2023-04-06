@@ -23,10 +23,13 @@ def get_username():
 
 BOARD_SIZE = 5
 NUM_OF_SHIPS = 5
+
 player_board = []
 computer_board = []
 player_ships = []
 computer_ships = []
+computer_guesses = []
+
 username = get_username()
 for x in range(BOARD_SIZE):
     player_board.append(["O"] * BOARD_SIZE)
@@ -115,11 +118,20 @@ def count_hit_ship(board):
 
 def computer_choice(board):
     """
-    Generate random computer choice and prints 'X' on the player board
+    Generate random computer choice and loops to check if
+    X and Y co-ordinates on the board are not in the
+    computer_guesses list, appends X and Y. Finally prints
+    'X' on the current chosen spot on the board.
     """
-    row = randint(0, len(board)-1)
-    col = randint(0, len(board)-1)
-    board[row][col] = 'X'
+    while True:
+        row = randint(0, len(board)-1)
+        col = randint(0, len(board)-1)
+        if (row, col) not in computer_guesses:
+            computer_guesses.append((row, col))
+            print(computer_guesses)
+            board[row][col] = 'X'
+        break
+    return (row, col)
 
 
 create_ship(player_board, player_ships)
