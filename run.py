@@ -85,22 +85,26 @@ def get_coordinates():
 
 def valid_coordinates(x, y, board, ships):
     """
-    Validates co-ordinates from the get_coordinates function to see if
-    player has hit or miss
+    Validates co-ordinates from player and computer inputs.
+    If input hits a ship location prints '*' for hit or 'X' for miss.
+    Prints updated board and message where the X and Y coordinates
+    have been shot at and if its a hit or miss
     """
     if (x, y) in ships:
-        print(f'Direct HIT! Admiral {username} You sunk a enemy ship!')
         board[x][y] = '*'
-        count_hit_ship(computer_board)
-        computer_choice(player_board)
-        print_board(player_board, username)
-        print_board(computer_board, "Enemy")
+        count_hit_ship(board)
     else:
-        print(f'MISS. No hit Admiral {username}')
         board[x][y] = 'X'
-        computer_choice(player_board)
-        print_board(player_board, username)
-        print_board(computer_board, "Enemy")
+    if board == player_board:
+        player = "Enemy"
+        opponent = username
+        print_board(board, opponent)
+    else:
+        player = username
+        opponent = "Enemy"
+        print_board(board, opponent)
+    print(f"{player}'s shot at {opponent}'s fleet at ({x+1},{y+1})")
+    print(f"is a {'HIT' if (x,y) in ships else 'MISS'}!\n")
 
 
 def count_hit_ship(board):
@@ -112,7 +116,7 @@ def count_hit_ship(board):
         for y in x:
             if y == '*':
                 count += 1
-                print(f"Total ships sunk: {count}")
+                print(f"Total ships sunk: {count}\n")
     return count
 
 
@@ -140,4 +144,10 @@ print_board(player_board, username)
 print_board(computer_board, "Enemy")
 
 guess_x, guess_y = get_coordinates()
+c_guess_x, c_guess_y = computer_choice(player_board)
+
+print(f"this is computer row guess : {c_guess_x}")
+print(f"this is computer col guess : {c_guess_y}")
+
+valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
 valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
