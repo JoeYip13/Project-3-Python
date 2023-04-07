@@ -11,6 +11,20 @@
 from random import randint
 
 
+BOARD_SIZE = 5
+NUM_OF_SHIPS = 5
+
+player_board = []
+computer_board = []
+player_ships = []
+computer_ships = []
+computer_guesses = []
+
+for x in range(BOARD_SIZE):
+    player_board.append(["O"] * BOARD_SIZE)
+    computer_board.append(['O'] * BOARD_SIZE)
+
+
 def get_username():
     """
     Gets the username
@@ -21,19 +35,7 @@ def get_username():
     return username
 
 
-BOARD_SIZE = 5
-NUM_OF_SHIPS = 5
-
-player_board = []
-computer_board = []
-player_ships = []
-computer_ships = []
-computer_guesses = []
-
 username = get_username()
-for x in range(BOARD_SIZE):
-    player_board.append(["O"] * BOARD_SIZE)
-    computer_board.append(['O'] * BOARD_SIZE)
 
 
 def print_board(board, player):
@@ -62,7 +64,6 @@ def create_ship(board, ships):
             ship_y = randint(0, len(board)-1)
         board[ship_x][ship_y] = 'S'
         ships.append((ship_x, ship_y))
-        print(ships)
     return ships
 
 
@@ -92,7 +93,6 @@ def valid_coordinates(x, y, board, ships):
     """
     if (x, y) in ships:
         board[x][y] = '*'
-        count_hit_ship(board)
     else:
         board[x][y] = 'X'
     if board == player_board:
@@ -103,7 +103,7 @@ def valid_coordinates(x, y, board, ships):
         player = username
         opponent = "Enemy"
         print_board(board, opponent)
-    print(f"{player}'s shot at {opponent}'s fleet at ({x+1},{y+1})")
+    print(f"{player} shot at {opponent}'s fleet at ({x+1},{y+1})")
     print(f"is a {'HIT' if (x,y) in ships else 'MISS'}!\n")
 
 
@@ -116,7 +116,6 @@ def count_hit_ship(board):
         for y in x:
             if y == '*':
                 count += 1
-                print(f"Total ships sunk: {count}\n")
     return count
 
 
@@ -138,16 +137,28 @@ def computer_choice(board):
     return (row, col)
 
 
-create_ship(player_board, player_ships)
-create_ship(computer_board, computer_ships)
-print_board(player_board, username)
-print_board(computer_board, "Enemy")
+def run_game():
+    """
+    Main game function.
+    """
+    create_ship(player_board, player_ships)
+    create_ship(computer_board, computer_ships)
+    print_board(player_board, username)
+    print_board(computer_board, "Enemy")
 
-guess_x, guess_y = get_coordinates()
-c_guess_x, c_guess_y = computer_choice(player_board)
+    while True:
+        guess_x, guess_y = get_coordinates()
+        c_guess_x, c_guess_y = computer_choice(player_board)
 
-print(f"this is computer row guess : {c_guess_x}")
-print(f"this is computer col guess : {c_guess_y}")
+        valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
+        valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
 
-valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
-valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
+        if count_hit_ship(computer_board) == 2:
+            print("You sunk all the Enemy ships! You win!")
+            return False
+        if count_hit_ship(player_board) == 2:
+            print("Enemy has sunk all your ships. Game Over!")
+            return False
+
+
+run_game()
