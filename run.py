@@ -21,8 +21,8 @@ computer_ships = []
 computer_guesses = []
 
 for x in range(BOARD_SIZE):
-    player_board.append(["O"] * BOARD_SIZE)
-    computer_board.append(['O'] * BOARD_SIZE)
+    player_board.append(["~"] * BOARD_SIZE)
+    computer_board.append(['~'] * BOARD_SIZE)
 
 
 def get_username():
@@ -40,13 +40,14 @@ username = get_username()
 
 def print_board(board, player):
     """
-    Prints the board
+    Prints the board with X-axis as 1-5 and Y-axis as A-E
     """
     print(f"{player}'s Battle Fleet")
-    print('----------')
-    for row in board:
-        print(" ".join(row))
-    print('----------')
+    print('    1 2 3 4 5')
+    print('---------------')
+    for i, row in enumerate(board):
+        print(f"{chr(ord('A')+i)} | {' '.join(row)} |")
+    print('---------------')
 
     return board
 
