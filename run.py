@@ -73,16 +73,17 @@ def get_coordinates():
     Gets X and Y co-ordinate inputs and validates input to only
     take the co-ordinates within the board size
     """
-    x = input('Enter X co-ordinate (1-5): ')
-    while x not in '12345':
-        print('Please enter a valid number')
-        x = input('Enter X co-ordinate (1-5): ')
+    x = input('Enter X co-ordinate (A-E): ')
+    while x.upper() not in 'ABCDE':
+        print('Please enter a valid letter between A-E')
+        x = input('Enter X co-ordinate (A-E): ')
     y = input('Enter Y co-ordinate (1-5): ')
     while y not in '12345':
         print('Please enter a valid number')
         y = input('Enter Y co-ordinate (1-5): ')
-
-    return int(x)-1, int(y)-1
+    x = ord(x.upper()) - 65  # converting letter to a number between 0-4
+    y = int(y) - 1  # subtracting 1 to get a number between 0-4
+    return x, y
 
 
 def valid_coordinates(x, y, board, ships):
@@ -104,7 +105,7 @@ def valid_coordinates(x, y, board, ships):
         player = username
         opponent = "Enemy"
         print_board(board, opponent)
-    print(f"{player} shot at {opponent}'s fleet at ({x+1},{y+1})")
+    print(f"{player} shot at {opponent}'s fleet at ({chr(x+65)},{y+1})")
     print(f"is a {'HIT' if (x,y) in ships else 'MISS'}!\n")
 
 
@@ -132,7 +133,6 @@ def computer_choice(board):
         col = randint(0, len(board)-1)
         if (row, col) not in computer_guesses:
             computer_guesses.append((row, col))
-            print(computer_guesses)
             board[row][col] = 'X'
         break
     return (row, col)
