@@ -12,7 +12,7 @@ from random import randint
 
 
 BOARD_SIZE = 5
-NUM_OF_SHIPS = 5
+NUM_OF_SHIPS = 2
 
 player_board = []
 computer_board = []
@@ -20,6 +20,9 @@ player_ships = []
 computer_ships = []
 computer_guesses = []
 player_guesses = []
+
+player_score = 0
+computer_score = 0
 
 for x in range(BOARD_SIZE):
     player_board.append(["~"] * BOARD_SIZE)
@@ -163,6 +166,17 @@ def already_guessed(x, y, guesses):
         return True
 
 
+def calculate_score():
+    """
+    Calculates the score of the player and the computer
+    """
+    global player_score
+    global computer_score
+    player_score = count_hit_ship(computer_board)
+    computer_score = count_hit_ship(player_board)
+    print(f"Score: {username}: {player_score}, Enemy: {computer_score}\n")
+
+
 def run_game():
     """
     Main game function.
@@ -179,14 +193,22 @@ def run_game():
         c_guess_x, c_guess_y = computer_guess(player_board)
 
         valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
+        calculate_score()
+        if computer_score == NUM_OF_SHIPS:
+            print(f"{username} lost! Game over!")
+            break
         valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
+        calculate_score()
+        if player_score == NUM_OF_SHIPS:
+            print(f"{username} wins! Congratulations!")
+            break
 
-        if count_hit_ship(computer_board) == 2:
-            print("You sunk all the Enemy ships! You win!")
-            return False
-        if count_hit_ship(player_board) == 5:
-            print("Enemy has sunk all your ships. Game Over!")
-            return False
+        # if count_hit_ship(computer_board) == 2:
+        #     print("You sunk all the Enemy ships! You win!")
+        #     return False
+        # if count_hit_ship(player_board) == 5:
+        #     print("Enemy has sunk all your ships. Game Over!")
+        #     return False
 
 
 run_game()
