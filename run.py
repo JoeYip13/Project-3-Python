@@ -79,7 +79,7 @@ def get_coordinates():
             raise ValueError('No input entered. Please try again.')
         if x.upper() not in 'ABCDE':
             raise ValueError('Please enter a valid letter between (A-E)')
-        
+
         while True:
             y = input('Enter Y co-ordinate (1-5): ')
             if not y:
@@ -130,7 +130,7 @@ def count_hit_ship(board):
     return count
 
 
-def computer_choice(board):
+def computer_guess(board):
     """
     Generate random computer choice and loops to check if
     X and Y co-ordinates on the board are not in the
@@ -158,7 +158,7 @@ def run_game():
 
     while True:
         guess_x, guess_y = get_coordinates()
-        c_guess_x, c_guess_y = computer_choice(player_board)
+        c_guess_x, c_guess_y = computer_guess(player_board)
 
         valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
         valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
