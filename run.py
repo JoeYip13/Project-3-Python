@@ -73,17 +73,26 @@ def get_coordinates():
     Gets X and Y co-ordinate inputs and validates input to only
     take the co-ordinates within the board size
     """
-    x = input('Enter X co-ordinate (A-E): ')
-    while x.upper() not in 'ABCDE':
-        print('Please enter a valid letter between A-E')
+    try:
         x = input('Enter X co-ordinate (A-E): ')
-    y = input('Enter Y co-ordinate (1-5): ')
-    while y not in '12345':
-        print('Please enter a valid number')
-        y = input('Enter Y co-ordinate (1-5): ')
-    x = ord(x.upper()) - 65  # converting letter to a number between 0-4
-    y = int(y) - 1  # subtracting 1 to get a number between 0-4
-    return x, y
+        if not x:
+            raise ValueError('No input entered. Please try again.')
+        if x.upper() not in 'ABCDE':
+            raise ValueError('Please enter a valid letter between (A-E)')
+        
+        while True:
+            y = input('Enter Y co-ordinate (1-5): ')
+            if not y:
+                raise ValueError('No input entered. Please try again.')
+            if y not in '12345':
+                print('Please enter a valid number between (1-5)')
+            else:
+                x = ord(x.upper()) - 65  # convert letter to a num between 0-4
+                y = int(y) - 1  # subtracting 1 to get a number between 0-4
+                return x, y
+    except ValueError as err:
+        print(err)
+        return get_coordinates()
 
 
 def valid_coordinates(x, y, board, ships):
