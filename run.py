@@ -19,6 +19,7 @@ computer_board = []
 player_ships = []
 computer_ships = []
 computer_guesses = []
+player_guesses = []
 
 for x in range(BOARD_SIZE):
     player_board.append(["~"] * BOARD_SIZE)
@@ -143,8 +144,23 @@ def computer_guess(board):
         if (row, col) not in computer_guesses:
             computer_guesses.append((row, col))
             board[row][col] = 'X'
-        break
+            break
     return (row, col)
+
+
+def already_guessed(x, y, guesses):
+    """
+    checks if the coordinates X and Y has already been guessed before in
+    the guesses list. If the coordinate has already been guessed, prompt
+    the user to choose another coordinate.
+    """
+    if (x, y) in guesses:
+        print("You've already guessed this coordinate. Enter again.")
+        return False
+    else:
+        guesses.append((x, y))
+        print(guesses)
+        return True
 
 
 def run_game():
@@ -158,6 +174,8 @@ def run_game():
 
     while True:
         guess_x, guess_y = get_coordinates()
+        while not already_guessed(guess_x, guess_y, player_guesses):
+            guess_x, guess_y = get_coordinates()
         c_guess_x, c_guess_y = computer_guess(player_board)
 
         valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
@@ -166,7 +184,7 @@ def run_game():
         if count_hit_ship(computer_board) == 2:
             print("You sunk all the Enemy ships! You win!")
             return False
-        if count_hit_ship(player_board) == 2:
+        if count_hit_ship(player_board) == 5:
             print("Enemy has sunk all your ships. Game Over!")
             return False
 
