@@ -45,13 +45,19 @@ username = get_username()
 def print_board(board, player):
     """
     Prints the board with X-axis as 1-5 and Y-axis as A-E
+    Hides the computer 'S'
     """
     print(f"{player}'s Battle Fleet")
     print('    1 2 3 4 5')
     print('---------------')
     for i, row in enumerate(board):
-        print(f"{chr(ord('A')+i)} | {' '.join(row)} |")
+        if board == player_board:
+            print(f"{chr(ord('A')+i)} | {' '.join(row)} |")
+        else:
+            hidden_row = ['~' if cell == 'S' else cell for cell in row]
+            print(f"{chr(ord('A')+i)} | {' '.join(hidden_row)} |")
     print('---------------')
+
 
     return board
 
