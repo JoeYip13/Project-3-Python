@@ -9,6 +9,7 @@
 # 6. Game objectives is to sink the opponents ship.
 # 7. Winner is first to sink all opponents ships.
 from random import randint
+import sys
 
 
 BOARD_SIZE = 5
@@ -24,9 +25,11 @@ player_guesses = []
 player_score = 0
 computer_score = 0
 
-for x in range(BOARD_SIZE):
-    player_board.append(["~"] * BOARD_SIZE)
-    computer_board.append(['~'] * BOARD_SIZE)
+
+def create_board(board):
+    for x in range(BOARD_SIZE):
+        board.append(["~"] * BOARD_SIZE)
+    return board
 
 
 def get_username():
@@ -35,7 +38,6 @@ def get_username():
     """
     username = input('Enter your username: ')
     print(f'Welcome to Battleships Admiral {username}!')
-
     return username
 
 
@@ -57,8 +59,6 @@ def print_board(board, player):
             hidden_row = ['~' if cell == 'S' else cell for cell in row]
             print(f"{chr(ord('A')+i)} | {' '.join(hidden_row)} |")
     print('---------------')
-
-
     return board
 
 
@@ -75,6 +75,7 @@ def create_ship(board, ships):
             ship_y = randint(0, len(board)-1)
         board[ship_x][ship_y] = 'S'
         ships.append((ship_x, ship_y))
+        print(computer_ships)
     return ships
 
 
@@ -168,7 +169,6 @@ def already_guessed(x, y, guesses):
         return False
     else:
         guesses.append((x, y))
-        print(guesses)
         return True
 
 
@@ -187,6 +187,8 @@ def run_game():
     """
     Main game function.
     """
+    create_board(player_board)
+    create_board(computer_board)
     create_ship(player_board, player_ships)
     create_ship(computer_board, computer_ships)
     print_board(player_board, username)
@@ -199,22 +201,39 @@ def run_game():
         c_guess_x, c_guess_y = computer_guess(player_board)
 
         valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
-        calculate_score()
         if computer_score == NUM_OF_SHIPS:
             print(f"{username} lost! Game over!")
-            break
+            play_again()
         valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
         calculate_score()
         if player_score == NUM_OF_SHIPS:
             print(f"{username} wins! Congratulations!")
-            break
+            play_again()
 
-        # if count_hit_ship(computer_board) == 2:
-        #     print("You sunk all the Enemy ships! You win!")
-        #     return False
-        # if count_hit_ship(player_board) == 5:
-        #     print("Enemy has sunk all your ships. Game Over!")
-        #     return False
+
+def play_again():
+    """
+    Play again function will ask the player if they want to play again
+    after the game has ended or exit
+    """
+    print("Would you like to play again?\n")
+    answer = input("Enter Y or N\n").upper()
+    while True:
+        if answer == "Y":
+            print(answer)
+            player_board.clear()
+            computer_board.clear()
+            player_ships.clear()
+            computer_ships.clear()
+            player_guesses.clear()
+            computer_guesses.clear()
+            run_game()
+        elif answer == "N":
+            print("Goodbye!\n")
+            sys.exit()
+        else:
+            print("Please enter Y or N\n")
+            answer = input("Enter Y or N\n").upper()
 
 
 run_game()
