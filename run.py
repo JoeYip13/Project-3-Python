@@ -10,6 +10,7 @@
 # 7. Winner is first to sink all opponents ships.
 from random import randint
 import sys
+import os
 
 
 BOARD_SIZE = 5
@@ -221,6 +222,7 @@ def play_again():
     while True:
         if answer == "Y":
             print(answer)
+            clear_display()
             player_board.clear()
             computer_board.clear()
             player_ships.clear()
@@ -229,11 +231,19 @@ def play_again():
             computer_guesses.clear()
             run_game()
         elif answer == "N":
-            print("Goodbye!\n")
+            clear_display()
+            print(f"Goodbye {username}!\n")
             sys.exit()
         else:
             print("Please enter Y or N\n")
             answer = input("Enter Y or N\n").upper()
+
+
+def clear_display():
+    if os.name == 'nt': # For Windows
+        _=os.system('cls')
+    else:
+        _=os.system('clear') # For macOS and Linux
 
 
 run_game()
