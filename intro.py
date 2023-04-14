@@ -26,6 +26,18 @@ class Intro():
             """
         )
         print("Welcome to the game Battleships!\n")
-                   
+        option_menu = True
+        while option_menu:
+            options = input("Enter 'P' to play,"
+                            "      'I' for instructions\n").upper()
+            if options == "P":
+                option_menu = False
+                print("Starting game")
+            elif options == "I":
+                option_menu = False
+                print("Instructions function")
+            else:
+                print("Your input was not valid.")
+
 
 Intro()
