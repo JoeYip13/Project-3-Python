@@ -35,9 +35,23 @@ class Intro():
                 print("Starting game")
             elif options == "I":
                 option_menu = False
-                print("Instructions function")
+                self.game_instructions()
             else:
                 print("Your input was not valid.")
+
+    
+    def game_instructions(self):
+        """
+        Function that explains the instructions of the game
+        """
+        print(
+            "Your ships and Enemy ships are automatically genertated and placed on the board\n"
+            "5 Ships in total to be found\n"
+            "Enter your X coordinates (A-E) and press 'Enter' key\n"
+            "Enter your Y coordinates (1-5) and press 'Enter key\n"
+            "'X' marks a miss, '*' marks a hit\n"
+            "First person to sink all ships wins the game!\n"
+            "Enter your username and the game will begin. Good Luck!")
 
 
 Intro()
