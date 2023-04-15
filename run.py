@@ -8,10 +8,21 @@
 # 4. Enter your X and Y co-ordinates.
 # 6. Game objectives is to sink the opponents ship.
 # 7. Winner is first to sink all opponents ships.
+# 8. 'X' marks a miss on the board. '*' Marks a hit on board.
+"""
+Modules
+"""
 from random import randint
 import sys
 import os
 import intro
+"""
+Install colorama. Followed handy tutorial from Tech With Tim
+https://www.youtube.com/watch?v=u51Zjlnui4Y
+"""
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 
 
 BOARD_SIZE = 5
@@ -30,7 +41,7 @@ computer_score = 0
 
 def create_board(board):
     for x in range(BOARD_SIZE):
-        board.append(["~"] * BOARD_SIZE)
+        board.append([f"{Fore.CYAN}~"] * BOARD_SIZE)
     return board
 
 
@@ -38,8 +49,8 @@ def get_username():
     """
     Gets the username
     """
-    username = input('Enter your username: ')
-    print(f'Welcome to Battleships Admiral {username}!')
+    username = input(f'Enter your username:{Fore.GREEN} ')
+    print(f'{Fore.GREEN}Welcome to Battleships Admiral{Style.BRIGHT}{username}!')
     return username
 
 
@@ -51,15 +62,15 @@ def print_board(board, player):
     Prints the board with X-axis as 1-5 and Y-axis as A-E
     Hides the computer 'S'
     """
-    print(f"{player}'s Battle Fleet")
-    print('    1 2 3 4 5')
+    print(f"{Fore.GREEN}{player}'s Battle Fleet")
+    print(f'{Fore.RED}    1 2 3 4 5')
     print('---------------')
     for i, row in enumerate(board):
         if board == player_board:
-            print(f"{chr(ord('A')+i)} | {' '.join(row)} |")
+            print(f"{Fore.RED}{chr(ord('A')+i)}{Fore.RESET} | {' '.join(row)} {Fore.WHITE}|")
         else:
-            hidden_row = ['~' if cell == 'S' else cell for cell in row]
-            print(f"{chr(ord('A')+i)} | {' '.join(hidden_row)} |")
+            hidden_row = [f'{Fore.CYAN}~' if cell == (f'{Fore.GREEN}S') else cell for cell in row]
+            print(f"{Fore.RED}{chr(ord('A')+i)}{Fore.RESET} | {' '.join(hidden_row)} {Fore.WHITE}|")
     print('---------------')
     return board
 
@@ -75,7 +86,7 @@ def create_ship(board, ships):
         while board[ship_x][ship_y] == 'S':
             ship_x = randint(0, len(board)-1)
             ship_y = randint(0, len(board)-1)
-        board[ship_x][ship_y] = 'S'
+        board[ship_x][ship_y] = (f'{Fore.GREEN}S')
         ships.append((ship_x, ship_y))
         print(computer_ships)
     return ships
@@ -87,18 +98,18 @@ def get_coordinates():
     take the co-ordinates within the board size
     """
     try:
-        x = input('Enter X co-ordinate (A-E): ')
+        x = input(f'Enter X co-ordinate ({Fore.RED}A-E{Fore.RESET}):{Fore.RED} ')
         if not x:
-            raise ValueError('No input entered. Please try again.')
+            raise ValueError(f'{Fore.RED}No input entered. Please try again.')
         if x.upper() not in 'ABCDE':
-            raise ValueError('Please enter a valid letter between (A-E)')
+            raise ValueError(f'Please enter a valid letter between ({Fore.RED}A-E{Fore.RESET})')
 
         while True:
-            y = input('Enter Y co-ordinate (1-5): ')
+            y = input(f'{Fore.RESET}Enter Y co-ordinate ({Fore.RED}1-5{Fore.RESET}):{Fore.RED} ')
             if not y:
-                raise ValueError('No input entered. Please try again.')
+                raise ValueError(f'{Fore.RED}No input entered. Please try again.')
             if y not in '12345':
-                print('Please enter a valid number between (1-5)')
+                print(f'Please enter a valid number between ({Fore.RED}1-5{Fore.RESET})')
             else:
                 x = ord(x.upper()) - 65  # convert letter to a num between 0-4
                 y = int(y) - 1  # subtracting 1 to get a number between 0-4
@@ -116,9 +127,9 @@ def valid_coordinates(x, y, board, ships):
     have been shot at and if its a hit or miss
     """
     if (x, y) in ships:
-        board[x][y] = '*'
+        board[x][y] = (f'{Fore.RED}*')
     else:
-        board[x][y] = 'X'
+        board[x][y] = (f'{Fore.MAGENTA}X')
     if board == player_board:
         player = "Enemy"
         opponent = username
@@ -127,8 +138,8 @@ def valid_coordinates(x, y, board, ships):
         player = username
         opponent = "Enemy"
         print_board(board, opponent)
-    print(f"{player} shot at {opponent}'s fleet at ({chr(x+65)},{y+1})")
-    print(f"is a {'HIT' if (x,y) in ships else 'MISS'}!\n")
+    print(f"{player} shot at {opponent}'s fleet at ({Fore.RED}{chr(x+65)}{Fore.RESET},{Fore.RED}{y+1}{Fore.RESET})")
+    print(f"is a {f'{Fore.RED}HIT' if (x,y) in ships else f'{Fore.MAGENTA}MISS'}{Fore.RESET}!\n")
 
 
 def count_hit_ship(board):
@@ -138,7 +149,7 @@ def count_hit_ship(board):
     count = 0
     for x in board:
         for y in x:
-            if y == '*':
+            if y == (f'{Fore.RED}*'):
                 count += 1
     return count
 
@@ -155,7 +166,7 @@ def computer_guess(board):
         col = randint(0, len(board)-1)
         if (row, col) not in computer_guesses:
             computer_guesses.append((row, col))
-            board[row][col] = 'X'
+            board[row][col] = (f'{Fore.MAGENTA}X')
             break
     return (row, col)
 
@@ -167,7 +178,7 @@ def already_guessed(x, y, guesses):
     the user to choose another coordinate.
     """
     if (x, y) in guesses:
-        print("You've already guessed this coordinate. Enter again.")
+        print(f"{Fore.RED}You've already guessed this coordinate. Enter again.")
         return False
     else:
         guesses.append((x, y))
@@ -182,7 +193,7 @@ def calculate_score():
     global computer_score
     player_score = count_hit_ship(computer_board)
     computer_score = count_hit_ship(player_board)
-    print(f"Score: {username}: {player_score}, Enemy: {computer_score}\n")
+    print(f"{Fore.YELLOW}Score: {Fore.GREEN}{username}{Fore.RESET}: {Fore.RED}{player_score}{Fore.RESET}, {Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}\n")
 
 
 def run_game():
@@ -204,12 +215,12 @@ def run_game():
 
         valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
         if computer_score == NUM_OF_SHIPS:
-            print(f"{username} lost! Game over!")
+            print(f"{Fore.RED}{username} lost!{Fore.RESET} Game over!\n")
             play_again()
         valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
         calculate_score()
         if player_score == NUM_OF_SHIPS:
-            print(f"{username} wins! Congratulations!")
+            print(f"{Fore.GREEN}{username} wins!{Fore.RESET} Congratulations!\n")
             play_again()
 
 
@@ -218,8 +229,8 @@ def play_again():
     Play again function will ask the player if they want to play again
     after the game has ended or exit
     """
-    print("Would you like to play again?\n")
-    answer = input("Enter Y or N\n").upper()
+    print(f"{Fore.RESET}Would you like to play again?\n")
+    answer = input(f"Enter {Fore.GREEN}Y{Fore.RESET} or {Fore.GREEN}N\n").upper()
     while True:
         if answer == "Y":
             print(answer)
@@ -233,10 +244,10 @@ def play_again():
             run_game()
         elif answer == "N":
             clear_display()
-            print(f"Goodbye {username}!\n")
+            print(f"{Fore.BLUE}Goodbye {username}!\n")
             sys.exit()
         else:
-            print("Please enter Y or N\n")
+            print(f"Please enter {Fore.GREEN}Y{Fore.RESET} or {Fore.GREEN}N\n")
             answer = input("Enter Y or N\n").upper()
 
 
