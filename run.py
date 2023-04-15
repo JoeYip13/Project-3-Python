@@ -1,3 +1,17 @@
+"""
+Modules
+"""
+from random import randint
+import sys
+import os
+import intro
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
+"""
+Install colorama. Followed handy tutorial from Tech With Tim
+https://www.youtube.com/watch?v=u51Zjlnui4Y
+"""
 """ ----- A game of Battleships. -----"""
 # A single player game against the computer.
 # Rules of the game;
@@ -9,20 +23,6 @@
 # 6. Game objectives is to sink the opponents ship.
 # 7. Winner is first to sink all opponents ships.
 # 8. 'X' marks a miss on the board. '*' Marks a hit on board.
-"""
-Modules
-"""
-from random import randint
-import sys
-import os
-import intro
-"""
-Install colorama. Followed handy tutorial from Tech With Tim
-https://www.youtube.com/watch?v=u51Zjlnui4Y
-"""
-import colorama
-from colorama import Fore, Back, Style
-colorama.init(autoreset=True)
 
 
 BOARD_SIZE = 5
@@ -50,7 +50,10 @@ def get_username():
     Gets the username
     """
     username = input(f'Enter your username:{Fore.GREEN} ')
-    print(f'{Fore.GREEN}Welcome to Battleships Admiral{Style.BRIGHT}{username}!')
+    print(
+        f'{Fore.GREEN}Welcome to Battleships Admiral'
+        f'{Style.BRIGHT}{username}!'
+    )
     return username
 
 
@@ -67,10 +70,17 @@ def print_board(board, player):
     print('---------------')
     for i, row in enumerate(board):
         if board == player_board:
-            print(f"{Fore.RED}{chr(ord('A')+i)}{Fore.RESET} | {' '.join(row)} {Fore.WHITE}|")
+            print(
+                f"{Fore.RED}{chr(ord('A')+i)}{Fore.RESET}"
+                f" | {' '.join(row)} {Fore.WHITE}|"
+            )
         else:
-            hidden_row = [f'{Fore.CYAN}~' if cell == (f'{Fore.GREEN}S') else cell for cell in row]
-            print(f"{Fore.RED}{chr(ord('A')+i)}{Fore.RESET} | {' '.join(hidden_row)} {Fore.WHITE}|")
+            hidden_row = [f'{Fore.CYAN}~' if cell == (f'{Fore.GREEN}S')
+                          else cell for cell in row]
+            print(
+                f"{Fore.RED}{chr(ord('A')+i)}{Fore.RESET}"
+                f" | {' '.join(hidden_row)} {Fore.WHITE}|"
+            )
     print('---------------')
     return board
 
@@ -98,18 +108,24 @@ def get_coordinates():
     take the co-ordinates within the board size
     """
     try:
-        x = input(f'Enter X co-ordinate ({Fore.RED}A-E{Fore.RESET}):{Fore.RED} ')
+        x = input(f'Enter X co-ordinate ({Fore.RED}A-E{Fore.RESET}):'
+                  f'{Fore.RED} ')
         if not x:
             raise ValueError(f'{Fore.RED}No input entered. Please try again.')
         if x.upper() not in 'ABCDE':
-            raise ValueError(f'Please enter a valid letter between ({Fore.RED}A-E{Fore.RESET})')
+            raise ValueError(f'Please enter a valid letter between '
+                             f'({Fore.RED}A-E{Fore.RESET})')
 
         while True:
-            y = input(f'{Fore.RESET}Enter Y co-ordinate ({Fore.RED}1-5{Fore.RESET}):{Fore.RED} ')
+            y = input(f'{Fore.RESET}Enter Y co-ordinate'
+                      f'({Fore.RED}1-5{Fore.RESET}):'
+                      f'{Fore.RED} ')
             if not y:
-                raise ValueError(f'{Fore.RED}No input entered. Please try again.')
+                raise ValueError(f'{Fore.RED}No input entered.'
+                                 ' Please try again.')
             if y not in '12345':
-                print(f'Please enter a valid number between ({Fore.RED}1-5{Fore.RESET})')
+                print(f'Please enter a valid number between'
+                      f'({Fore.RED}1-5{Fore.RESET})')
             else:
                 x = ord(x.upper()) - 65  # convert letter to a num between 0-4
                 y = int(y) - 1  # subtracting 1 to get a number between 0-4
@@ -138,8 +154,13 @@ def valid_coordinates(x, y, board, ships):
         player = username
         opponent = "Enemy"
         print_board(board, opponent)
-    print(f"{player} shot at {opponent}'s fleet at ({Fore.RED}{chr(x+65)}{Fore.RESET},{Fore.RED}{y+1}{Fore.RESET})")
-    print(f"is a {f'{Fore.RED}HIT' if (x,y) in ships else f'{Fore.MAGENTA}MISS'}{Fore.RESET}!\n")
+    print(f"{player} shot at {opponent}'s fleet at "
+          f"({Fore.RED}{chr(x+65)}{Fore.RESET},{Fore.RED}{y+1}{Fore.RESET})")
+    if (x, y) in ships:
+        result = f'{Fore.RED}HIT'
+    else:
+        result = f'{Fore.MAGENTA}MISS'
+    print(f"is a {result}{Fore.RESET}!\n")
 
 
 def count_hit_ship(board):
@@ -178,7 +199,8 @@ def already_guessed(x, y, guesses):
     the user to choose another coordinate.
     """
     if (x, y) in guesses:
-        print(f"{Fore.RED}You've already guessed this coordinate. Enter again.")
+        print(f"{Fore.RED}You've already guessed this coordinate."
+              "Enter again.")
         return False
     else:
         guesses.append((x, y))
@@ -193,7 +215,10 @@ def calculate_score():
     global computer_score
     player_score = count_hit_ship(computer_board)
     computer_score = count_hit_ship(player_board)
-    print(f"{Fore.YELLOW}Score: {Fore.GREEN}{username}{Fore.RESET}: {Fore.RED}{player_score}{Fore.RESET}, {Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}\n")
+    print(
+        f"{Fore.YELLOW}Score: {Fore.GREEN}{username}{Fore.RESET}: "
+        f"{Fore.RED}{player_score}{Fore.RESET},"
+        f"{Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}\n")
 
 
 def run_game():
@@ -220,7 +245,8 @@ def run_game():
         valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
         calculate_score()
         if player_score == NUM_OF_SHIPS:
-            print(f"{Fore.GREEN}{username} wins!{Fore.RESET} Congratulations!\n")
+            print(f"{Fore.GREEN}{username} wins!{Fore.RESET}"
+                  "Congratulations!\n")
             play_again()
 
 
@@ -230,7 +256,8 @@ def play_again():
     after the game has ended or exit
     """
     print(f"{Fore.RESET}Would you like to play again?\n")
-    answer = input(f"Enter {Fore.GREEN}Y{Fore.RESET} or {Fore.GREEN}N\n").upper()
+    answer = input(f"Enter {Fore.GREEN}Y{Fore.RESET} or {Fore.GREEN}N\n"
+                   ).upper()
     while True:
         if answer == "Y":
             print(answer)
@@ -254,13 +281,13 @@ def play_again():
 def clear_display():
     """
     Function that clears the terminal display
-    Guidance frrom : 
+    Guidance from:
     https://www.codingninjas.com/codestudio/library/how-to-clear-a-screen-in-python
     """
-    if os.name == 'nt': # For Windows
-        _=os.system('cls')
+    if os.name == 'nt':  # For Windows
+        _ = os.system('cls')
     else:
-        _=os.system('clear') # For macOS and Linux
+        _ = os.system('clear')  # For macOS and Linux
 
 
 run_game()

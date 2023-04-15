@@ -14,7 +14,6 @@ class Intro():
     def __init__(self):
         self.welcome_screen()
 
-    
     def welcome_screen(self):
         """
         Display title of game, offer the player to view
