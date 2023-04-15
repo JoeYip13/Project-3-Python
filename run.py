@@ -11,6 +11,7 @@
 from random import randint
 import sys
 import os
+import intro
 
 
 BOARD_SIZE = 5
@@ -240,6 +241,11 @@ def play_again():
 
 
 def clear_display():
+    """
+    Function that clears the terminal display
+    Guidance frrom : 
+    https://www.codingninjas.com/codestudio/library/how-to-clear-a-screen-in-python
+    """
     if os.name == 'nt': # For Windows
         _=os.system('cls')
     else:
