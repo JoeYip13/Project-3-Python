@@ -34,19 +34,19 @@ class Intro():
                                                     |_|
             """
         )
-        print("Welcome to the game Battleships!\n")
+        print(f"{Fore.GREEN}Welcome to the game Battleships!\n")
         option_menu = True
         while option_menu:
-            options = input("Enter 'P' to play,"
-                            "      'I' for instructions\n").upper()
+            options = input(f"Enter {Fore.GREEN}'P'{Fore.RESET} to play,"
+                            f"      {Fore.GREEN}'I'{Fore.RESET} for instructions\n").upper()
             if options == "P":
                 option_menu = False
-                print("Starting game...")
+                print(f"{Fore.GREEN}Starting game...")
             elif options == "I":
                 option_menu = False
                 self.game_instructions()
             else:
-                print("Your input was not valid.")
+                print(f"{Fore.RED}Your input was not valid.")
 
     
     def game_instructions(self):
@@ -55,10 +55,10 @@ class Intro():
         """
         print(
             "Your ships and Enemy ships are automatically generated and placed on the board\n"
-            "Five ships in total to be found\n"
-            "Enter your X coordinates (A-E) and press 'Enter' key\n"
-            "Enter your Y coordinates (1-5) and press 'Enter key\n"
-            "'X' marks a miss, '*' marks a hit\n"
+            f"Five'{Fore.GREEN}S{Fore.RESET}'ships in total to be found\n"
+            f"Enter your X coordinates ({Fore.RED}A-E{Fore.RESET}) and press 'Enter' key\n"
+            f"Enter your Y coordinates ({Fore.RED}1-5{Fore.RESET}) and press 'Enter key\n"
+            f"'{Fore.MAGENTA}X{Fore.RESET}' marks a miss, '{Fore.RED}*{Fore.RESET}' marks a hit\n"
             "First person to sink all opponent ships wins the game!\n"
             "Enter your username and the game will begin. Good Luck!")
 
