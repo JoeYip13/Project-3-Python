@@ -1,3 +1,12 @@
+"""
+Install colorama. Followed handy tutorial from Tech With Tim
+https://www.youtube.com/watch?v=u51Zjlnui4Y
+"""
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
+
+
 class Intro():
     """
     Introduction to the game.
@@ -14,7 +23,7 @@ class Intro():
         Title taken from: https://ascii.co.uk/art/battleship
         """
         print(
-            """
+            f"""{Fore.GREEN}
              _           _   _   _           _     _       
             | |         | | | | | |         | |   (_)      
             | |__   __ _| |_| |_| | ___  ___| |__  _ _ __   ___
@@ -32,7 +41,7 @@ class Intro():
                             "      'I' for instructions\n").upper()
             if options == "P":
                 option_menu = False
-                print("Starting game")
+                print("Starting game...")
             elif options == "I":
                 option_menu = False
                 self.game_instructions()
@@ -45,12 +54,12 @@ class Intro():
         Function that explains the instructions of the game
         """
         print(
-            "Your ships and Enemy ships are automatically genertated and placed on the board\n"
-            "5 Ships in total to be found\n"
+            "Your ships and Enemy ships are automatically generated and placed on the board\n"
+            "Five ships in total to be found\n"
             "Enter your X coordinates (A-E) and press 'Enter' key\n"
             "Enter your Y coordinates (1-5) and press 'Enter key\n"
             "'X' marks a miss, '*' marks a hit\n"
-            "First person to sink all ships wins the game!\n"
+            "First person to sink all opponent ships wins the game!\n"
             "Enter your username and the game will begin. Good Luck!")
 
 

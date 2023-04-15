@@ -8,11 +8,24 @@
 # 4. Enter your X and Y co-ordinates.
 # 6. Game objectives is to sink the opponents ship.
 # 7. Winner is first to sink all opponents ships.
+# 8. 'X' marks a miss on the board. '*' Marks a hit on board.
+"""
+Modules
+"""
 from random import randint
 import sys
 import os
 import intro
+"""
+Install colorama. Followed handy tutorial from Tech With Tim
+https://www.youtube.com/watch?v=u51Zjlnui4Y
+"""
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 
+
+print(f"{Fore.RED} Hello {Fore.RESET} I'm not Red in color ")
 
 BOARD_SIZE = 5
 NUM_OF_SHIPS = 2
