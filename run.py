@@ -49,7 +49,7 @@ def get_username():
     """
     Gets the username
     """
-    username = input(f'Enter your username:{Fore.GREEN} ')
+    username = input(f'Enter your username:{Fore.GREEN} \n')
     print(
         f'{Fore.GREEN}Welcome to Battleships Admiral'
         f'{Style.BRIGHT}{username}!'
@@ -109,7 +109,7 @@ def get_coordinates():
     """
     try:
         x = input(f'Enter X co-ordinate ({Fore.RED}A-E{Fore.RESET}):'
-                  f'{Fore.RED} ')
+                  f'{Fore.RED} \n')
         if not x:
             raise ValueError(f'{Fore.RED}No input entered. Please try again.')
         if x.upper() not in 'ABCDE':
@@ -119,7 +119,7 @@ def get_coordinates():
         while True:
             y = input(f'{Fore.RESET}Enter Y co-ordinate'
                       f'({Fore.RED}1-5{Fore.RESET}):'
-                      f'{Fore.RED} ')
+                      f'{Fore.RED} \n')
             if not y:
                 raise ValueError(f'{Fore.RED}No input entered.'
                                  ' Please try again.')
