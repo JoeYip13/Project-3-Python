@@ -249,6 +249,22 @@ def calculate_score():
         f"{Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}\n")
 
 
+def calculate_winner():
+    """
+    Calculates the winner based on the current scores.
+    """
+    if player_score == NUM_OF_SHIPS:
+        print(f"{Fore.GREEN}{username} wins!{Fore.RESET}"
+              " Congratulations!\n")
+        play_again()
+    elif computer_score == NUM_OF_SHIPS:
+        print(f"{Fore.RED}{username} lost!{Fore.RESET} Game over!\n")
+        play_again()
+    else:
+        return True
+
+
+
 def run_game():
     """
     Main game function.
@@ -268,15 +284,10 @@ def run_game():
         c_guess_x, c_guess_y = computer_guess(player_board)
 
         valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
-        if computer_score == NUM_OF_SHIPS:
-            print(f"{Fore.RED}{username} lost!{Fore.RESET} Game over!\n")
-            play_again()
         valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
+
         calculate_score()
-        if player_score == NUM_OF_SHIPS:
-            print(f"{Fore.GREEN}{username} wins!{Fore.RESET}"
-                  "Congratulations!\n")
-            play_again()
+        calculate_winner()
 
 
 def play_again():
