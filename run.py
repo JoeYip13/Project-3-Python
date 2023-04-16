@@ -64,9 +64,15 @@ def determine_first_guesser():
     """
     Function to determine who gets to guess first. Head or tails
     """
-    user_guess = input("Guess heads or tails "
-                       f"({Fore.RED}H{Fore.RESET}/{Fore.RED}T{Fore.RESET}"
-                       "): \n").upper()
+    while True:
+        user_guess = input("Guess heads or tails "
+                        f"({Fore.RED}H{Fore.RESET}/{Fore.RED}T{Fore.RESET}"
+                        "): \n").upper()
+        if user_guess in ('H', 'T'):
+            break
+        print(f"Invalid choice. Please enter '{Fore.RED}H{Fore.RESET}' or "
+              f"'{Fore.RED}T{Fore.RESET}'.")
+        
     coin_toss = randint(0,1)
 
     if user_guess == 'H' and coin_toss == 0:
