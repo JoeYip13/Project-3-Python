@@ -51,8 +51,8 @@ def get_username():
     """
     username = input(f'Enter your username:{Fore.GREEN} \n')
     print(
-        f'{Fore.GREEN}Welcome to Battleships Admiral'
-        f'{Style.BRIGHT}{username}!'
+        f'{Fore.GREEN}Welcome to Battleships Admiral '
+        f'{Style.BRIGHT}{username}!\n{Fore.RESET}'
     )
     return username
 
@@ -62,8 +62,9 @@ username = get_username()
 
 def determine_first_guesser():
     """
-    Function to determine who gets to guess first. Head or tails
+    Function to determine who gets to guess first. Heads or tails
     """
+    print("To determine who gets to go first. We'll flip a coin")
     while True:
         user_guess = input("Guess heads or tails "
                         f"({Fore.RED}H{Fore.RESET}/{Fore.RED}T{Fore.RESET}"
@@ -136,15 +137,17 @@ def get_coordinates():
     take the co-ordinates within the board size
     """
     try:
-        x = input(f'Enter X co-ordinate ({Fore.RED}A-E{Fore.RESET}):'
-                  f'{Fore.RED} \n')
-        if not x:
-            raise ValueError(f'{Fore.RED}No input entered. Please try again.')
-        if x.upper() not in 'ABCDE':
-            raise ValueError(f'Please enter a valid letter between '
-                             f'({Fore.RED}A-E{Fore.RESET})')
-
         while True:
+            x = input(f'{Fore.RESET}Enter X co-ordinate ({Fore.RED}A-E'
+                      f'{Fore.RESET}):{Fore.RED}\n')
+            if not x:
+                raise ValueError(f'{Fore.RED}No input entered. '
+                                 'Please try again.')
+            if x.upper() not in 'ABCDE':
+                raise ValueError(f'{Fore.RED}Please enter a valid letter '
+                                 f'between {Style.BRIGHT}(A-E){Fore.RESET}')
+                continue
+
             y = input(f'{Fore.RESET}Enter Y co-ordinate'
                       f'({Fore.RED}1-5{Fore.RESET}):'
                       f'{Fore.RED} \n')
@@ -152,12 +155,14 @@ def get_coordinates():
                 raise ValueError(f'{Fore.RED}No input entered.'
                                  ' Please try again.')
             if y not in '12345':
-                print(f'Please enter a valid number between'
-                      f'({Fore.RED}1-5{Fore.RESET})')
-            else:
-                x = ord(x.upper()) - 65  # convert letter to a num between 0-4
-                y = int(y) - 1  # subtracting 1 to get a number between 0-4
-                return x, y
+                raise ValueError(f'Please enter a valid number between'
+                      f'{Style.BRIGHT}(1-5){Fore.RESET}')
+                continue
+
+            x = ord(x.upper()) - 65  # convert letter to a num between 0-4
+            y = int(y) - 1  # subtracting 1 to get a number between 0-4
+            return x, y
+
     except ValueError as err:
         print(err)
         return get_coordinates()
@@ -245,7 +250,7 @@ def calculate_score():
     computer_score = count_hit_ship(player_board)
     print(
         f"{Fore.YELLOW}Score: {Fore.GREEN}{username}{Fore.RESET}: "
-        f"{Fore.RED}{player_score}{Fore.RESET},"
+        f"{Fore.RED}{player_score}{Fore.RESET} | "
         f"{Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}\n")
 
 
@@ -338,7 +343,7 @@ def play_again():
             run_game()
         elif answer == "N":
             clear_display()
-            print(f"{Fore.BLUE}Goodbye {username}!\n")
+            print(f"{Fore.BLUE}{Style.BRIGHT}Goodbye {username}!\n")
             sys.exit()
         else:
             print(f"Please enter {Fore.GREEN}Y{Fore.RESET} or {Fore.GREEN}N\n")
