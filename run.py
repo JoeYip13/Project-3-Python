@@ -60,6 +60,28 @@ def get_username():
 username = get_username()
 
 
+def determine_first_guesser():
+    """
+    Function to determine who gets to guess first. Head or tails
+    """
+    user_guess = input("Guess heads or tails "
+                       f"({Fore.RED}H{Fore.RESET}/{Fore.RED}T{Fore.RESET}"
+                       "): \n").upper()
+    coin_toss = randint(0,1)
+
+    if user_guess == 'H' and coin_toss == 0:
+        print(f"It's {Fore.GREEN}heads{Fore.RESET}! You get to guess first.")
+        return "user"
+    elif user_guess == 'T' and coin_toss == 1:
+        print(f"It's {Fore.GREEN}tails{Fore.RESET}! You get to guess first.")
+        return "user"
+    else:
+        print("It's", f"{Fore.RED}heads{Fore.RESET}" 
+            if coin_toss == 0 else f"{Fore.RED}tails{Fore.RESET}" ,
+              "! The enemy gets to guess first")
+        return "computer"
+
+
 def print_board(board, player):
     """
     Prints the board with X-axis as 1-5 and Y-axis as A-E
@@ -225,6 +247,7 @@ def run_game():
     """
     Main game function.
     """
+    determine_first_guesser()
     create_board(player_board)
     create_board(computer_board)
     create_ship(player_board, player_ships)
