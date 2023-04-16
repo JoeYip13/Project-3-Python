@@ -264,30 +264,57 @@ def calculate_winner():
         return True
 
 
-
 def run_game():
     """
     Main game function.
     """
-    determine_first_guesser()
+    num_turns = 0
+
+    guesser_first = determine_first_guesser()
+
     create_board(player_board)
     create_board(computer_board)
     create_ship(player_board, player_ships)
     create_ship(computer_board, computer_ships)
-    print_board(player_board, username)
-    print_board(computer_board, "Enemy")
 
-    while True:
-        guess_x, guess_y = get_coordinates()
-        while not already_guessed(guess_x, guess_y, player_guesses):
+    if guesser_first == "user":
+        print_board(computer_board, "Enemy")
+        print_board(player_board, username)
+        while True:
             guess_x, guess_y = get_coordinates()
+            while not already_guessed(guess_x, guess_y, player_guesses):
+                guess_x, guess_y = get_coordinates()
+            valid_coordinates(guess_x, guess_y, computer_board,
+                                  computer_ships)
+            c_guess_x, c_guess_y = computer_guess(player_board)
+            valid_coordinates(c_guess_x, c_guess_y, player_board,
+                                  player_ships)
+            num_turns += 1
+            calculate_score()
+            print(f"Number of turns: {num_turns}")
+            if not calculate_winner():
+                play_again()
+            
+    else:
+        print_board(player_board, username)
+        print_board(computer_board, "Enemy")
         c_guess_x, c_guess_y = computer_guess(player_board)
-
-        valid_coordinates(c_guess_x, c_guess_y, player_board, player_ships)
-        valid_coordinates(guess_x, guess_y, computer_board, computer_ships)
-
-        calculate_score()
-        calculate_winner()
+        valid_coordinates(c_guess_x, c_guess_y, player_board,
+                          player_ships)
+        while True:
+            guess_x, guess_y = get_coordinates()
+            while not already_guessed(guess_x, guess_y, player_guesses):
+                guess_x, guess_y = get_coordinates()
+            valid_coordinates(guess_x, guess_y, computer_board,
+                                  computer_ships)
+            c_guess_x, c_guess_y = computer_guess(player_board)
+            valid_coordinates(c_guess_x, c_guess_y, player_board,
+                                  player_ships)
+            num_turns += 1
+            calculate_score()
+            print(f"Number of turns: {num_turns}\n")
+            if not calculate_winner():
+                play_again()
 
 
 def play_again():
