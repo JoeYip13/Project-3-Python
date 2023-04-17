@@ -142,7 +142,7 @@ def get_coordinates():
             if not x:
                 raise ValueError(f'{Fore.RED}No input entered. '
                                  'Please try again.')
-            if x.upper() not in 'ABCDE':
+            if len(x) != 1 or x.upper() not in 'ABCDE':
                 raise ValueError(f'{Fore.RED}Please enter a valid letter '
                                  f'between {Style.BRIGHT}(A-E){Fore.RESET}')
                 continue
@@ -153,7 +153,7 @@ def get_coordinates():
             if not y:
                 raise ValueError(f'{Fore.RED}No input entered.'
                                  ' Please try again.')
-            if y not in '12345':
+            if len(y) != 1 or y not in '12345':
                 raise ValueError(f'Please enter a valid number between'
                       f'{Style.BRIGHT}(1-5){Fore.RESET}')
                 continue
@@ -347,8 +347,10 @@ def play_again():
             print(f"{Fore.BLUE}{Style.BRIGHT}Goodbye {username}!\n")
             sys.exit()
         else:
-            print(f"Please enter {Fore.GREEN}Y{Fore.RESET} or {Fore.GREEN}N\n")
-            answer = input("Enter Y or N\n").upper()
+            print(f"{Fore.RESET}Please enter {Fore.GREEN}Y{Fore.RESET} "
+                  f"or {Fore.GREEN}N\n")
+            answer = input(f"{Fore.RESET}Enter {Fore.GREEN}Y{Fore.RESET} "
+                           f"or {Fore.GREEN}N\n").upper()
 
 
 def clear_display():
