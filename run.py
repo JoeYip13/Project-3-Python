@@ -26,7 +26,7 @@ https://www.youtube.com/watch?v=u51Zjlnui4Y
 
 
 BOARD_SIZE = 5
-NUM_OF_SHIPS = 2
+NUM_OF_SHIPS = 5
 
 player_board = []
 computer_board = []
@@ -67,14 +67,14 @@ def determine_first_guesser():
     print("To determine who gets to go first. We'll flip a coin")
     while True:
         user_guess = input("Guess heads or tails "
-                        f"({Fore.RED}H{Fore.RESET}/{Fore.RED}T{Fore.RESET}"
-                        "): \n").upper()
+                           f"({Fore.RED}H{Fore.RESET}/{Fore.RED}T{Fore.RESET}"
+                           "): \n").upper()
         if user_guess in ('H', 'T'):
             break
         print(f"Invalid choice. Please enter '{Fore.RED}H{Fore.RESET}' or "
               f"'{Fore.RED}T{Fore.RESET}'.")
-        
-    coin_toss = randint(0,1)
+
+    coin_toss = randint(0, 1)
 
     if user_guess == 'H' and coin_toss == 0:
         print(f"It's {Fore.GREEN}heads{Fore.RESET}! You get to guess first.")
@@ -83,8 +83,8 @@ def determine_first_guesser():
         print(f"It's {Fore.GREEN}tails{Fore.RESET}! You get to guess first.")
         return "user"
     else:
-        print("It's", f"{Fore.RED}heads{Fore.RESET}" 
-            if coin_toss == 0 else f"{Fore.RED}tails{Fore.RESET}" ,
+        print("It's", f"{Fore.RED}heads{Fore.RESET}"
+              if coin_toss == 0 else f"{Fore.RED}tails{Fore.RESET}",
               "! The enemy gets to guess first")
         return "computer"
 
@@ -290,16 +290,16 @@ def run_game():
             while not already_guessed(guess_x, guess_y, player_guesses):
                 guess_x, guess_y = get_coordinates()
             valid_coordinates(guess_x, guess_y, computer_board,
-                                  computer_ships)
+                              computer_ships)
             c_guess_x, c_guess_y = computer_guess(player_board)
             valid_coordinates(c_guess_x, c_guess_y, player_board,
-                                  player_ships)
+                              player_ships)
             num_turns += 1
             calculate_score()
             print(f"Number of turns: {num_turns}")
             if not calculate_winner():
                 play_again()
-            
+
     else:
         print_board(player_board, username)
         print_board(computer_board, "Enemy")
@@ -311,10 +311,10 @@ def run_game():
             while not already_guessed(guess_x, guess_y, player_guesses):
                 guess_x, guess_y = get_coordinates()
             valid_coordinates(guess_x, guess_y, computer_board,
-                                  computer_ships)
+                              computer_ships)
             c_guess_x, c_guess_y = computer_guess(player_board)
             valid_coordinates(c_guess_x, c_guess_y, player_board,
-                                  player_ships)
+                              player_ships)
             num_turns += 1
             calculate_score()
             print(f"Number of turns: {num_turns}\n")
