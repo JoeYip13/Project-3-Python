@@ -122,7 +122,7 @@ def create_ship(board, ships):
     for ship in range(NUM_OF_SHIPS):
         ship_x = randint(0, len(board)-1)
         ship_y = randint(0, len(board)-1)
-        while board[ship_x][ship_y] == 'S':
+        while board[ship_x][ship_y] == (f'{Fore.GREEN}S'):
             ship_x = randint(0, len(board)-1)
             ship_y = randint(0, len(board)-1)
         board[ship_x][ship_y] = (f'{Fore.GREEN}S')
