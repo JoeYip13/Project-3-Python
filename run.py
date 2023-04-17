@@ -127,7 +127,6 @@ def create_ship(board, ships):
             ship_y = randint(0, len(board)-1)
         board[ship_x][ship_y] = (f'{Fore.GREEN}S')
         ships.append((ship_x, ship_y))
-        print(computer_ships)
     return ships
 
 
@@ -283,12 +282,13 @@ def run_game():
     create_ship(computer_board, computer_ships)
 
     if guesser_first == "user":
-        print_board(computer_board, "Enemy")
         print_board(player_board, username)
+        print_board(computer_board, "Enemy")
         while True:
             guess_x, guess_y = get_coordinates()
             while not already_guessed(guess_x, guess_y, player_guesses):
                 guess_x, guess_y = get_coordinates()
+            clear_display()
             valid_coordinates(guess_x, guess_y, computer_board,
                               computer_ships)
             c_guess_x, c_guess_y = computer_guess(player_board)
@@ -310,6 +310,7 @@ def run_game():
             guess_x, guess_y = get_coordinates()
             while not already_guessed(guess_x, guess_y, player_guesses):
                 guess_x, guess_y = get_coordinates()
+            clear_display()
             valid_coordinates(guess_x, guess_y, computer_board,
                               computer_ships)
             c_guess_x, c_guess_y = computer_guess(player_board)
