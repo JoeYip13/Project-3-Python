@@ -36,7 +36,7 @@ class Intro():
         print(f"{Fore.GREEN}Welcome to the game Battleships!\n")
         option_menu = True
         while option_menu:
-            options = input(f"Enter {Fore.GREEN}'P'{Fore.RESET} to play,"
+            options = input(f"Enter {Fore.GREEN}'P'{Fore.RESET} to play, "
                             f"{Fore.GREEN}'I'{Fore.RESET} for instructions\n"
                             ).upper()
             if options == "P":
@@ -53,9 +53,9 @@ class Intro():
         Function that explains the instructions of the game
         """
         print(
-            "Your ships and Enemy ships are automatically generated and "
+            "Your ships and enemy ships are automatically generated and "
             "placed on the board\n"
-            f"Five'{Fore.GREEN}S{Fore.RESET}'ships in total to be found\n"
+            f"Five ships '{Fore.GREEN}S{Fore.RESET}' in total to be found\n"
             f"Enter your X coordinates ({Fore.RED}A-E{Fore.RESET}) and "
             "press 'Enter' key\n"
             f"Enter your Y coordinates ({Fore.RED}1-5{Fore.RESET}) and "

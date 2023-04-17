@@ -192,7 +192,7 @@ def valid_coordinates(x, y, board, ships):
         result = f'{Fore.RED}HIT'
     else:
         result = f'{Fore.MAGENTA}MISS'
-    print(f"is a {result}{Fore.RESET}!\n")
+    print(f"is a {result}{Fore.RESET}!")
 
 
 def count_hit_ship(board):
@@ -250,7 +250,7 @@ def calculate_score():
     print(
         f"{Fore.YELLOW}Score: {Fore.GREEN}{username}{Fore.RESET}: "
         f"{Fore.RED}{player_score}{Fore.RESET} | "
-        f"{Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}\n")
+        f"{Fore.RED}Enemy{Fore.RESET}: {Fore.RED}{computer_score}")
 
 
 def calculate_winner():
@@ -318,7 +318,7 @@ def run_game():
                               player_ships)
             num_turns += 1
             calculate_score()
-            print(f"Number of turns: {num_turns}\n")
+            print(f"Number of turns: {num_turns}")
             if not calculate_winner():
                 play_again()
 
