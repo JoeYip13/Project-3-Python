@@ -6,7 +6,7 @@ Users can try to beat the computer by finding all the computer's battleships bef
 <div align="center"><img src="/assets/images/battleships-python-pp3.jpg" alt="battleships welcome screen"></div>
 
 
-Click on me [Battleships](https://battleships-joeyip13.herokuapp.com/) to be taken to the final deployment of the project.
+Click on me [Battleships](https://battleships-joe-yip-a6b915940e04.herokuapp.com/) to be taken to the final deployment of the project.
 
 ## Table of Contents 
 
